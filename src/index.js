@@ -5,6 +5,7 @@ const express = require('express');
 const morgan = require('morgan');
 const routes = require('./routes');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 mongoose.connect('mongodb://localhost:27017/course-api', { useNewUrlParser: true });
 const db = mongoose.connection;
@@ -24,6 +25,8 @@ app.set('port', process.env.PORT || 5000);
 
 // morgan gives us http request logging
 app.use(morgan('dev'));
+
+app.use(bodyParser.json());
 
 // TODO add additional routes here
 app.use('/api/v1', routes);

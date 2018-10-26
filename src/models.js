@@ -29,7 +29,7 @@ const UserSchema = new Schema({
 const ReviewSchema = new Schema({
   user: {
     type: ObjectId,
-    ref: 'User'
+    ref: 'user'
   },
   postedOn: {
     type: Date,
@@ -47,7 +47,7 @@ const ReviewSchema = new Schema({
 const CourseSchema = new Schema({
   user: {
     type: ObjectId,
-    ref: 'User'
+    ref: 'user'
   },
   title: {
     type: String,
@@ -72,7 +72,7 @@ const CourseSchema = new Schema({
   }],
   reviews: [{
     type: ObjectId,
-    ref: 'Review'
+    ref: 'review'
   }]
 });
 
