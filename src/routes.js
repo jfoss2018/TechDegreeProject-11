@@ -21,11 +21,13 @@ router.param('cID', function(req, res, next, id) {
 });
 
 router.get('/users', mid.collectLogin, (req, res, next) => {
-  User.find({}, function(err, users) {
-    if (err) return next(err);
+  if (!req.user) {
+    const err = new Error('Authentication Header Required.')
+    err.status = 401;
+    next(err);
+  }
     res.status(200);
-    res.json(users);
-  });
+    res.json(req.user);
 });
 
 router.get('/courses', (req, res, next) => {
@@ -36,8 +38,15 @@ router.get('/courses', (req, res, next) => {
   });
 });
 
-router.post('/courses', (req, res, next) => {
+router.post('/courses', mid.collectLogin, (req, res, next) => {
+  if (!req.user) {
+    const err = new Error('Authentication Header Required.')
+    err.status = 401;
+    next(err);
+  }
   const course = new Course(req.body);
+  course.user = req.user._id;
+  course.reviews = [];
   course.save(function(err, newCourse) {
     if (err) {
       err.status = 400;
@@ -50,16 +59,24 @@ router.post('/courses', (req, res, next) => {
 });
 
 router.get('/courses/:cID', (req, res, next) => {
-  Course.findById(req.params.cID).populate('user')
+  Course.findById(req.params.cID).populate('user', 'fullName')
     .populate('reviews')
     .exec(function(err, course) {
-      console.log(course);
       res.status(200);
       res.json(course);
     });
 });
 
-router.put('/courses/:cID', (req, res, next) => {
+
+
+
+// PUT ROUTE NEEDS VALIDATION
+router.put('/courses/:cID', mid.collectLogin, (req, res, next) => {
+  if (!req.user) {
+    const err = new Error('Authentication Header Required.')
+    err.status = 401;
+    next(err);
+  }
   req.course.update(req.body, function(err, result) {
     if (err) {
       err.status = 400;
@@ -83,8 +100,9 @@ router.post('/users', (req, res, next) => {
   });
 });
 
-router.post('/courses/:cID/reviews', (req, res, next) => {
+router.post('/courses/:cID/reviews', mid.collectLogin, (req, res, next) => {
   const review = new Review(req.body);
+  review.user = req.user._id;
   review.save(function(err, newReview) {
     if (err) {
       err.status = 400;
@@ -96,7 +114,7 @@ router.post('/courses/:cID/reviews', (req, res, next) => {
         err.status = 400;
         return next(err);
       }
-      res.location(`/courses/${req.params.cID}`)
+      res.location(`/api/v1/courses/${req.params.cID}`)
       res.status(201);
       res.json();
     });

@@ -3,6 +3,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
+const uniqueValidator = require('mongoose-unique-validator');
+
+mongoose.set('useCreateIndex', true);
 
 const ObjectId = Schema.Types.ObjectId;
 
@@ -19,13 +22,16 @@ const UserSchema = new Schema({
         return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(string);
       },
       message: props => `${props.value} is not a valid email address!`
-    }
+    },
+    unique: true
   },
   password: {
     type: String,
     required: true
   }
 });
+
+UserSchema.plugin(uniqueValidator);
 
 UserSchema.pre('save', function(next) {
   const user = this;

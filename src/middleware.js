@@ -4,7 +4,7 @@ const User = require('./models.js').User;
 function collectLogin (req, res, next) {
   const user = auth(req);
   if (user === undefined) {
-    // Do something here. Return nothing?
+    next();
   }
   User.authenticate(user.name, user.pass, function(err, searchUser) {
     if (err || !searchUser) {
@@ -13,7 +13,6 @@ function collectLogin (req, res, next) {
       next(err);
     }
     req.user = searchUser;
-    console.log(searchUser);
     next();
   });
 }
