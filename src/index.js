@@ -6,8 +6,9 @@ const morgan = require('morgan');
 const routes = require('./routes');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const config = require('./_config.js');
 
-mongoose.connect('mongodb://localhost:27017/course-api', { useNewUrlParser: true });
+mongoose.connect(config.mongoURI[process.env.NODE_ENV], { useNewUrlParser: true });
 const db = mongoose.connection;
 
 db.on('error', function(err) {
@@ -64,7 +65,7 @@ const server = app.listen(app.get('port'), () => {
   console.log(`Express server is listening on port ${server.address().port}`);
 });
 
-
+module.exports = server;
 /*
 
 ================================================================================
