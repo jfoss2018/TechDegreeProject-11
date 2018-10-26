@@ -5,6 +5,7 @@ const router = express.Router();
 const Course = require('./models.js').Course;
 const User = require('./models.js').User;
 const Review = require('./models.js').Review;
+const mid = require('./middleware.js');
 
 router.param('cID', function(req, res, next, id) {
   Course.findById(id, function(err, doc) {
@@ -19,7 +20,7 @@ router.param('cID', function(req, res, next, id) {
   });
 });
 
-router.get('/users', (req, res, next) => {
+router.get('/users', mid.collectLogin, (req, res, next) => {
   User.find({}, function(err, users) {
     if (err) return next(err);
     res.status(200);
@@ -38,7 +39,10 @@ router.get('/courses', (req, res, next) => {
 router.post('/courses', (req, res, next) => {
   const course = new Course(req.body);
   course.save(function(err, newCourse) {
-    if (err) return next(err);
+    if (err) {
+      err.status = 400;
+      return next(err);
+    }
     res.location('/');
     res.status(201);
     res.json();
@@ -57,7 +61,10 @@ router.get('/courses/:cID', (req, res, next) => {
 
 router.put('/courses/:cID', (req, res, next) => {
   req.course.update(req.body, function(err, result) {
-    if (err) return next(err);
+    if (err) {
+      err.status = 400;
+      return next(err);
+    }
     res.status(204);
     res.json();
   });
@@ -66,7 +73,10 @@ router.put('/courses/:cID', (req, res, next) => {
 router.post('/users', (req, res, next) => {
   const user = new User(req.body);
   user.save(function(err, newUser) {
-    if (err) return next(err);
+    if (err) {
+      err.status = 400;
+      return next(err);
+    }
     res.location('/');
     res.status(201);
     res.json();
@@ -76,10 +86,16 @@ router.post('/users', (req, res, next) => {
 router.post('/courses/:cID/reviews', (req, res, next) => {
   const review = new Review(req.body);
   review.save(function(err, newReview) {
-    if (err) return next(err);
+    if (err) {
+      err.status = 400;
+      return next(err);
+    }
     req.course.reviews.push(newReview.id);
     req.course.save(function(err, course) {
-      if (err) return next(err);
+      if (err) {
+        err.status = 400;
+        return next(err);
+      }
       res.location(`/courses/${req.params.cID}`)
       res.status(201);
       res.json();

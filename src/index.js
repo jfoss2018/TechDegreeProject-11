@@ -151,6 +151,7 @@ For security reasons, we don't want to store the password property in the
 database as clear text.
 Create a pre save hook on the user schema that uses the bcrypt npm package to
 hash the user's password.
+
 See https://github.com/ncb000gt/node.bcrypt.js/ for more information.
 Create an authentication method on the user model to return the user document
 based on their credentials
