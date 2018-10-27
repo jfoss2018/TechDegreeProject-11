@@ -10,7 +10,7 @@
 		{
 			"name": "Get Courses",
 			"request": {
-				"url": "localhost:5000/api/courses",
+				"url": "localhost:5000/api/v1/courses",
 				"method": "GET",
 				"header": [
 					{
@@ -35,7 +35,7 @@
 		{
 			"name": "Get Course",
 			"request": {
-				"url": "localhost:5000/api/courses/57029ed4795118be119cc43d",
+				"url": "localhost:5000/api/v1/courses/57029ed4795118be119cc43d",
 				"method": "GET",
 				"header": [
 					{
@@ -55,7 +55,7 @@
 		{
 			"name": "Create User (Incomplete Data)",
 			"request": {
-				"url": "http://localhost:5000/api/users",
+				"url": "http://localhost:5000/api/v1/users",
 				"method": "POST",
 				"header": [
 					{
@@ -75,7 +75,7 @@
 		{
 			"name": "Create User",
 			"request": {
-				"url": "http://localhost:5000/api/users",
+				"url": "http://localhost:5000/api/v1/users",
 				"method": "POST",
 				"header": [
 					{
@@ -95,7 +95,7 @@
 		{
 			"name": "Create User (Existing Email Address)",
 			"request": {
-				"url": "http://localhost:5000/api/users",
+				"url": "http://localhost:5000/api/v1/users",
 				"method": "POST",
 				"header": [
 					{
@@ -115,7 +115,7 @@
 		{
 			"name": "Get Users (No Auth)",
 			"request": {
-				"url": "http://localhost:5000/api/users",
+				"url": "http://localhost:5000/api/v1/users",
 				"method": "GET",
 				"header": [],
 				"body": {},
@@ -126,7 +126,7 @@
 		{
 			"name": "Get Users (With Auth)",
 			"request": {
-				"url": "http://localhost:5000/api/users",
+				"url": "http://localhost:5000/api/v1/users",
 				"method": "GET",
 				"header": [
 					{
@@ -143,7 +143,7 @@
 		{
 			"name": "Create Course (No Auth, Incomplete Data)",
 			"request": {
-				"url": "localhost:5000/api/courses",
+				"url": "localhost:5000/api/v1/courses",
 				"method": "POST",
 				"header": [
 					{
@@ -163,7 +163,7 @@
 		{
 			"name": "Create Course (Incomplete Data)",
 			"request": {
-				"url": "localhost:5000/api/courses",
+				"url": "localhost:5000/api/v1/courses",
 				"method": "POST",
 				"header": [
 					{
@@ -188,7 +188,7 @@
 		{
 			"name": "Create Course (Minimum Data)",
 			"request": {
-				"url": "localhost:5000/api/courses",
+				"url": "localhost:5000/api/v1/courses",
 				"method": "POST",
 				"header": [
 					{
@@ -213,7 +213,7 @@
 		{
 			"name": "Update Course (Minimum Data)",
 			"request": {
-				"url": "localhost:5000/api/courses/5702a1fdf18e6ebd1292282e",
+				"url": "localhost:5000/api/v1/courses/5702a1fdf18e6ebd1292282e",
 				"method": "PUT",
 				"header": [
 					{
@@ -238,7 +238,7 @@
 		{
 			"name": "Create Review",
 			"request": {
-				"url": "http://localhost:5000/api/courses/57029ed4795118be119cc43d/reviews",
+				"url": "http://localhost:5000/api/v1/courses/57029ed4795118be119cc43d/reviews",
 				"method": "POST",
 				"header": [
 					{
