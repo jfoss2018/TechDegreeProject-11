@@ -50,11 +50,11 @@ This REST API only has seven routes. They are listed here for convenience.
 
 - GET /api/v1/courses
 - POST /api/v1/courses
-- GET /api/v1/courses/<id>
+- GET /api/v1/courses/\<id\>
 - GET /api/v1/users
 - POST /api/v1/users
-- PUT /api/v1/courses/<id>
-- POST /api/v1/courses/<id>/reviews
+- PUT /api/v1/courses/\<id\>
+- POST /api/v1/courses/\<id\>/reviews
 
 ### Testing
 
