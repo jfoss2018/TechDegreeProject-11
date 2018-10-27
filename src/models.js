@@ -1,14 +1,19 @@
 'use strict'
 
+// Requirements
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 const uniqueValidator = require('mongoose-unique-validator');
 
+// This is suggested when using mongoose-unique-validator.
 mongoose.set('useCreateIndex', true);
 
+// Declaration
 const ObjectId = Schema.Types.ObjectId;
 
+// This user schema sets up the structure for the user data that we pass into
+// mongoDB.
 const UserSchema = new Schema({
   fullName: {
     type: String,
@@ -31,8 +36,11 @@ const UserSchema = new Schema({
   }
 });
 
+// Requirement to make the "unique" key a validator.
 UserSchema.plugin(uniqueValidator);
 
+// This hook allows us to collect and hash the "password" just before saving
+// a user document. This ensures that no passwords can viewed in the database.
 UserSchema.pre('save', function(next) {
   const user = this;
   bcrypt.hash(user.password, 10, function(err, hash) {
@@ -42,6 +50,10 @@ UserSchema.pre('save', function(next) {
   });
 });
 
+// This static method authenticates a user by finding the corresponding document
+// to the email supplied (emails must be unique), then hashes the supplied
+// password and compares that to the document's password property. If it matches,
+// the user document is returned.
 UserSchema.statics.authenticate = function(email, password, callback) {
     User.findOne({emailAddress: email})
       .exec(function(err, user) {
@@ -62,6 +74,8 @@ UserSchema.statics.authenticate = function(email, password, callback) {
     });
 };
 
+// This review schema sets up the structure for the review data that we pass into
+// mongoDB.
 const ReviewSchema = new Schema({
   user: {
     type: ObjectId,
@@ -80,6 +94,8 @@ const ReviewSchema = new Schema({
   review: String
 });
 
+// This course schema sets up the structure for the course data that we pass into
+// mongoDB.
 const CourseSchema = new Schema({
   user: {
     type: ObjectId,
@@ -112,10 +128,12 @@ const CourseSchema = new Schema({
   }]
 });
 
+// Here the models for each schema are created.
 const User = mongoose.model('user', UserSchema);
 const Course = mongoose.model('course', CourseSchema);
 const Review = mongoose.model('review', ReviewSchema);
 
+// And then the models are exported.
 module.exports.User = User;
 module.exports.Course = Course;
 module.exports.Review = Review;

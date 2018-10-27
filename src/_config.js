@@ -1,3 +1,5 @@
+
+// I use this config file to set up the environment for the MongoDB connection.
 const config = {};
 
 config.mongoURI = {
