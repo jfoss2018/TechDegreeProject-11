@@ -3,8 +3,13 @@
   "version": "1.0.0",
   "description": "Project 11",
   "main": "src/index.js",
+  "engines": {
+    "node": "10.9.0",
+    "npm": "6.2.0"
+  },
   "scripts": {
-    "start": "nodemon ./src/index.js localhost 5000",
+    "start": "set NODE_ENV=production&& node ./src/index.js",
+    "dev": "nodemon ./src/index.js localhost 5000",
     "test": "mocha --reporter list --timeout 10000"
   },
   "author": "James Foss",

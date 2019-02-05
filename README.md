@@ -1,16 +1,22 @@
 # TechDegreeProject-11
 
-This project uses Node.js, Express, MongoDB and Mongoose to create a REST API that enables users to create, edit and review courses in a database.
+This project utilizes Node.js, Express, MongoDB and Mongoose to create a REST API that enables users to create, edit and review courses in a database. This project introduces authentication through Basic Auth headers when accessing the REST API routes, server-side validation, and includes unit testing on routes using Mocha and Chai.
 
-### Prerequisites
+### What does it do?
+
+This REST API allows users to access a course review database through API requests that can either be accessed through another app or through http request tools like Postman. This database allows the user to create users, and with those users' credentials create courses and reviews.
+
+### Additional Project Info for Grading
+
+#### Prerequisites
 
 This REST API project does not include a user interface in which to populate forms for sending POST and PUT requests, so it will be necessary to use a tool like Postman to manipulate http requests when consuming this project. You can find Postman [here.](https://www.getpostman.com/)
 
 You will also need mongoDB installed on your computer. The treehouse installation guides for [Windows](http://treehouse.github.io/installation-guides/windows/mongo-windows.html) and for [Mac](http://treehouse.github.io/installation-guides/mac/mongo-mac.html) can be found at these links.
 
-### Installing
+#### Installing
 
-Once you have downloaded this project, navigate to the folder in which the project is stored in your command-line or terminal and run
+Once you have downloaded this project, navigate to the folder in which the project is stored in your command-line or terminal and run:
 
 ```
 npm install
@@ -44,7 +50,7 @@ Once everything is setup, you can run the following from the project folder
 npm start
 ```
 
-### Routes
+#### Routes
 
 This REST API only has seven routes. They are listed here for convenience.
 
@@ -56,7 +62,7 @@ This REST API only has seven routes. They are listed here for convenience.
 - PUT /api/v1/courses/\<id\>
 - POST /api/v1/courses/\<id\>/reviews
 
-### Testing
+#### Testing
 
 Running
 

@@ -43,17 +43,158 @@ app.use('/api/v1', routes);
 
 // send a friendly greeting for the root route
 app.get('/', (req, res) => {
-  res.json({
-    message: 'Welcome to the Course Review API'
-  });
+  res.send(`<pre>{
+    message: 'Welcome to the Course Review API',
+    basic_auth_options: {
+      option_1: 'Create a basic auth token from "&lt;username&gt;:&lt;password&gt;" and include "Basic &lt;token&gt;" in your authorization header.',
+      option_2: 'Construct your URL address in the following: http://&lt;username\&gt;:\&lt;password\&gt;@\&lt;sitename\&gt;/\&lt;api route\&gt;'
+    },
+    routes: {
+      "GET /api/v1/courses": {
+        requirements: "none"
+      },
+      "POST /api/v1/courses": {
+        requirements: {
+          authorization: "Basic Auth",
+          body_feilds: {
+            title: {
+              type: "string",
+              required: "yes"
+            },
+            description: {
+              type: "string",
+              required: "yes"
+            },
+            estimatedTime: {
+              type: "string",
+              required: "no"
+            },
+            materialsNeeded: {
+              type: "string",
+              required: "no"
+            },
+            steps: {
+              type: "array",
+              array_items_structure: {
+                type: "object",
+                body_feilds: {
+                  stepNumber: {
+                    type: "number",
+                    required: "no"
+                  },
+                  title: {
+                    type: "string",
+                    required: "yes"
+                  },
+                  description:{
+                    type: "string",
+                    required: "yes"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "GET /api/v1/courses/&lt;id&gt;": {
+        requirements: {
+          url_parameters: "course id"
+        }
+      },
+      "GET /api/v1/users": {
+        requirements: {
+          authorization: "Basic Auth"
+        }
+      },
+      "POST /api/v1/users": {
+        requirements: {
+          body_feilds: {
+            fullName: {
+              type: "string",
+              required: "yes"
+            },
+            emailAddress: {
+              type: "string",
+              required: "yes"
+            },
+            password: {
+              type: "string",
+              required: "yes"
+            }
+          }
+        }
+      },
+      "PUT /api/v1/courses/&lt;id&gt;": {
+        requirements: {
+          authorization: "Basic Auth",
+          url_parameters: "course id",
+          body_feilds: {
+            title: {
+              type: "string",
+              required: "no"
+            },
+            description: {
+              type: "string",
+              required: "no"
+            },
+            estimatedTime: {
+              type: "string",
+              required: "no"
+            },
+            materialsNeeded: {
+              type: "string",
+              required: "no"
+            },
+            steps: {
+              type: "array",
+              array_items_structure: {
+                type: "object",
+                body_feilds: {
+                  stepNumber: {
+                    type: "number",
+                    required: "no"
+                  },
+                  title: {
+                    type: "string",
+                    required: "no"
+                  },
+                  description: {
+                    type: "string",
+                    required: "no"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "POST /api/v1/courses/&lt;id&gt;/reviews": {
+        requirements: {
+          authorization: "Basic Auth",
+          url_parameters: "course id",
+          body_feilds: {
+            rating: {
+              type: "number",
+              required: "yes",
+              values: "1 to 5"
+            },
+            review: {
+              type: "string",
+              required: "no"
+            }
+          }
+        }
+      }
+    }
+  }</pre>`);
 });
 
 // send 404 if no other route matched
 app.use((req, res) => {
   res.status(404).json({
     message: 'Route Not Found'
-  })
-})
+  });
+});
 
 // global error handler
 app.use((err, req, res, next) => {
