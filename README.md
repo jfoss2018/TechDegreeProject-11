@@ -47,7 +47,7 @@ You can also preload Postman to show predefined routes by importing the CourseAP
 Once everything is setup, you can run the following from the project folder
 
 ```
-npm start
+npm run dev
 ```
 
 #### Routes
